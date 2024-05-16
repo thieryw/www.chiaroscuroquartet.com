@@ -456,91 +456,91 @@ $('body').on('submit', '.contact form', function() {
 
 
 /* Ajax */
-(function() {
-	var popped = ('state' in window.history), initialURL = location.href,
-		prevUrl = currentUrl(),
-		main = $('#content'),
-		body = $('body');
-	function loadContent(url) {
-		if(url == prevUrl) {
-			return;
-		}
-		prevUrl = url;
-		$.post(url.replace(/(?=\?)|$/, '.ajax'), function(data) {
-			var menuOld, menuNew, oldContent, newContent, oldBackground, newBackground;
-			
-			data = $(data);
-			
-			document.title = $('#page-title', data).text();
-			$('title').text(document.title);
-			
-			menuOld = $('header nav li.open').length ? $('header nav li.open').prevAll().length : -1;
-			$('header nav li').removeClass('open').children().removeClass('open');
-			$('header nav a[href="'+$('#page-menu a.open', data).attr('href')+'"]').addClass('open').parent().addClass('open');
-			menuNew = $('header nav li.open').length ? $('header nav li.open').prevAll().length : -1;
-
-			oldContent = $('#content').children();
-			newContent = $('#page-content', data).children();
-
-			oldBackground = $('#bg-container .bg-image:not(.going)').data('background');
-			newBackground = $('#page-content', data).data('background');
-
-			if(oldBackground != newBackground) {
-				$('#bg-container .bg-image:not(.going)').addClass('going').fadeOut().promise().done(function() {
-					$('#bg-container .bg-image.going').remove();
-				});
-			}
-
-			oldContent.fadeOut().promise().done(function() {
-				oldContent.remove();
-				newContent.appendTo('#content').hide().fadeIn();
-				window.scrollTo(0, 0);
-				$('body').attr('class', $('#page-content', data).attr('class'));
-
-				function chBg() {
-					if(oldBackground != newBackground) {
-						$('#bg-container').append($('<div class="bg-image"></div>').data('background', newBackground).css('background-image', 'url('+newBackground+')').hide().fadeIn());
-					}
-				}
-				if(newBackground) {
-					loadPic(newBackground, chBg);
-				} else {
-					chBg();
-				}
-				initContent();
-			});
-
-		}, 'html');
-	}
-	function currentUrl() {
-		return location.href.replace(/#.*$/, '').replace($.CMS.FULL_URL_ROOT, '');
-	}
-	function newState(url) {
-		if(!history.pushState) {
-			return;
-		}
-		history.pushState({}, '', url);
-		loadContent(url);
-		$('.spinner').fadeOut();
-		return false;
-	}
-	$(window).bind('popstate', function() {
-		var url = currentUrl();
-		// Ignore inital popstate that some browsers fire on page load
-		var initialPop = !popped && location.href == initialURL;
-		popped = true;
-		if(initialPop) {
-			return;
-		}
-		loadContent(url);
-	});
-	$('body').on('click', '#logo, header nav a, a.disc-box, a.news, .news-list a, .flip-box.button', function() {
-		if(body.width() <= 1024) {
-			return;
-		}
-		return newState($(this).attr('href').replace(/#.*/, ''));
-	});
-})();
+//(function() {
+//	var popped = ('state' in window.history), initialURL = location.href,
+//		prevUrl = currentUrl(),
+//		main = $('#content'),
+//		body = $('body');
+//	function loadContent(url) {
+//		if(url == prevUrl) {
+//			return;
+//		}
+//		prevUrl = url;
+//		$.post(url.replace(/(?=\?)|$/, '.ajax'), function(data) {
+//			var menuOld, menuNew, oldContent, newContent, oldBackground, newBackground;
+//			
+//			data = $(data);
+//			
+//			document.title = $('#page-title', data).text();
+//			$('title').text(document.title);
+//			
+//			menuOld = $('header nav li.open').length ? $('header nav li.open').prevAll().length : -1;
+//			$('header nav li').removeClass('open').children().removeClass('open');
+//			$('header nav a[href="'+$('#page-menu a.open', data).attr('href')+'"]').addClass('open').parent().addClass('open');
+//			menuNew = $('header nav li.open').length ? $('header nav li.open').prevAll().length : -1;
+//
+//			oldContent = $('#content').children();
+//			newContent = $('#page-content', data).children();
+//
+//			oldBackground = $('#bg-container .bg-image:not(.going)').data('background');
+//			newBackground = $('#page-content', data).data('background');
+//
+//			if(oldBackground != newBackground) {
+//				$('#bg-container .bg-image:not(.going)').addClass('going').fadeOut().promise().done(function() {
+//					$('#bg-container .bg-image.going').remove();
+//				});
+//			}
+//
+//			oldContent.fadeOut().promise().done(function() {
+//				oldContent.remove();
+//				newContent.appendTo('#content').hide().fadeIn();
+//				window.scrollTo(0, 0);
+//				$('body').attr('class', $('#page-content', data).attr('class'));
+//
+//				function chBg() {
+//					if(oldBackground != newBackground) {
+//						$('#bg-container').append($('<div class="bg-image"></div>').data('background', newBackground).css('background-image', 'url('+newBackground+')').hide().fadeIn());
+//					}
+//				}
+//				if(newBackground) {
+//					loadPic(newBackground, chBg);
+//				} else {
+//					chBg();
+//				}
+//				initContent();
+//			});
+//
+//		}, 'html');
+//	}
+//	function currentUrl() {
+//		return location.href.replace(/#.*$/, '').replace($.CMS.FULL_URL_ROOT, '');
+//	}
+//	function newState(url) {
+//		if(!history.pushState) {
+//			return;
+//		}
+//		history.pushState({}, '', url);
+//		loadContent(url);
+//		$('.spinner').fadeOut();
+//		return false;
+//	}
+//	$(window).bind('popstate', function() {
+//		var url = currentUrl();
+//		// Ignore inital popstate that some browsers fire on page load
+//		var initialPop = !popped && location.href == initialURL;
+//		popped = true;
+//		if(initialPop) {
+//			return;
+//		}
+//		loadContent(url);
+//	});
+//	$('body').on('click', '#logo, header nav a, a.disc-box, a.news, .news-list a, .flip-box.button', function() {
+//		if(body.width() <= 1024) {
+//			return;
+//		}
+//		return newState($(this).attr('href').replace(/#.*/, ''));
+//	});
+//})();
 
 if($(window).width() <= 1024) {
 	if($('body').is('.module-frontpage')) {
