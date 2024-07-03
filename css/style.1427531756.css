@@ -1,7 +1,7 @@
 /* Non-semantic helper classes */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
-.clearfix { *zoom: 1; }
+.clearfix { zoom: 1; }
 
 /* Primary Styles
    Author: Aivo Paas
@@ -199,10 +199,10 @@ body {
     background-size: 25px 25px;
   }
   
-  /*#content {
+  #content {
     max-width: 1040px;
     margin: 60px auto 0;
-  }*/
+  }
   .contentWrapper {
     display: flex;
     justify-content: center;
@@ -473,7 +473,6 @@ body {
   
   .bio-pic {
     margin-bottom: 10px;
-    margin-left: ;
     position: relative;
     width: 200px;
     height: 200px;
@@ -627,7 +626,6 @@ body {
   }
   
   .bio-quotes .quote .where:before {
-    color: ;
     content: ',';
   }
   
